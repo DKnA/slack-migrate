@@ -6,8 +6,6 @@ from tabulate import tabulate
 import sys
 from slack_bolt import App
 
-# Utility function moved from cli_utils.py
-
 
 def filter_channels_by_type(channels, filter_type):
     """Filter channels based on the requested type.
@@ -240,14 +238,14 @@ def archive_channels_cmd(channel_id, dry_run):
 @click.option('--dry-run', is_flag=True, help='Preview actions without executing them')
 def prefix_channels_cmd(prefix, channel_id, dry_run):
     """Add a prefix to Slack channel names.
-    
+
     PREFIX is the prefix to add to channel names (without the # symbol).
     CHANNEL_ID is an optional single channel ID to rename.
     If CHANNEL_ID is not provided, channel IDs will be read from stdin.
-    
+
     The new channel name will follow the pattern: {prefix}-{old-channel-name}
     Channels that already start with the prefix will be skipped.
-    
+
     Example usage:
         slack_migrate channels prefix archived C01234ABCDE
         cat channel_ids.txt | slack_migrate channels prefix team-x
@@ -257,30 +255,31 @@ def prefix_channels_cmd(prefix, channel_id, dry_run):
         prefix = prefix[1:]
     if prefix.endswith('-'):
         prefix = prefix[:-1]
-    
+
     channel_ids = []
     if channel_id:
         channel_ids = [channel_id]
     else:
         for line in sys.stdin:
             line = line.strip()
-            if line:  
+            if line:
                 channel_ids.append(line)
-    
+
     if not channel_ids:
-        click.echo("No channel IDs provided. Either specify a channel ID or pipe a list of channel IDs to this command.")
+        click.echo(
+            "No channel IDs provided. Either specify a channel ID or pipe a list of channel IDs to this command.")
         return
-    
+
     click.echo(f"Found {len(channel_ids)} channel(s) to process.")
-    
+
     to_rename = []
     skipped = []
-    
+
     for ch_id in channel_ids:
         try:
             channel_info = get_channel_info(ch_id)
             current_name = channel_info.get('name', '')
-            
+
             if current_name.startswith(f"{prefix}-"):
                 skipped.append((ch_id, current_name))
             else:
@@ -288,21 +287,22 @@ def prefix_channels_cmd(prefix, channel_id, dry_run):
                 to_rename.append((ch_id, current_name, new_name))
         except Exception as e:
             click.echo(f"Error getting info for channel {ch_id}: {str(e)}")
-    
+
     if dry_run:
         click.echo("DRY RUN: The following channels would be renamed:")
         for ch_id, old_name, new_name in to_rename:
             click.echo(f"  - {ch_id} ({old_name}) → {new_name}")
-        
+
         if skipped:
-            click.echo("\nThe following channels would be skipped (already have prefix):")
+            click.echo(
+                "\nThe following channels would be skipped (already have prefix):")
             for ch_id, name in skipped:
                 click.echo(f"  - {ch_id} ({name})")
         return
-    
+
     success_count = 0
     failed_channels = []
-    
+
     with click.progressbar(to_rename, label='Renaming channels') as bar:
         for ch_id, old_name, new_name in bar:
             try:
@@ -310,17 +310,18 @@ def prefix_channels_cmd(prefix, channel_id, dry_run):
                 if success:
                     success_count += 1
                 else:
-                    failed_channels.append((ch_id, old_name, new_name, "API call returned false"))
+                    failed_channels.append(
+                        (ch_id, old_name, new_name, "API call returned false"))
             except Exception as e:
                 failed_channels.append((ch_id, old_name, new_name, str(e)))
-    
+
     click.echo(f"Successfully renamed {success_count} channel(s).")
-    
+
     if skipped:
         click.echo(f"Skipped {len(skipped)} channel(s) (already have prefix):")
         for ch_id, name in skipped:
             click.echo(f"  - {ch_id} ({name})")
-    
+
     if failed_channels:
         click.echo(f"Failed to rename {len(failed_channels)} channel(s):")
         for ch_id, old_name, new_name, error in failed_channels:
