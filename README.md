@@ -69,31 +69,35 @@ The tool provides several command groups for different Slack data types:
 ### Channels Commands
 
 ```bash
-slack-migrate channels list [--refresh] [--format FORMAT]
-slack-migrate channels info CHANNEL_ID
-slack-migrate channels rename CHANNEL_ID NEW_NAME
-slack-migrate channels archive CHANNEL_ID
+slack-migrate channels fetch [--type TYPE] [--refresh] [--creator CREATOR] [--archived-days-ago DAYS] [--created-days-ago DAYS] [--zero-members]
+slack-migrate channels archive CHANNEL_ID [--dry-run]
+slack-migrate channels prefix PREFIX [CHANNEL_ID] [--dry-run]
 ```
 
 ### Emoji Commands
 
 ```bash
-slack-migrate emoji list [--refresh] [--format FORMAT]
-slack-migrate emoji export [--refresh] [--output-dir DIR]
+slack-migrate emoji fetch [--refresh]
+slack-migrate emoji download [--refresh]
 ```
 
 ### Users Commands
 
 ```bash
-slack-migrate users list [--refresh] [--format FORMAT]
-slack-migrate users info USER_ID [--refresh]
+slack-migrate users fetch [--refresh]
 ```
 
 ### Common Options
 
 - `--refresh`: Force refresh the cache and fetch new data from Slack
-- `--format`: Output format (default: table, options: table, json, csv)
-- `--output-dir`: Directory for exported files (for emoji export)
+- `--dry-run`: Preview actions without executing them (for archive and prefix commands)
+
+### Channel Type Options
+- `--type`: Filter channels by type (choices: all, active, archived; default: all)
+- `--creator`: Filter channels by creator ID or email
+- `--archived-days-ago`: Filter channels archived within specified number of days
+- `--created-days-ago`: Filter channels created within specified number of days
+- `--zero-members`: Only show channels with zero members
 
 ## Caching
 
@@ -101,6 +105,66 @@ The tool implements a caching system to reduce API calls:
 - Cache files are stored in the `cache` directory
 - Use `--refresh` flag to force a fresh data fetch
 - Cache is automatically invalidated after 24 hours
+
+## Examples
+
+Here are some common usage examples of the CLI tool:
+
+### Archive Empty Channels
+To find and archive all channels that have zero members:
+
+```bash
+# First, list all empty channels
+slack-migrate channels fetch --zero-members
+
+# Review the output and if you want to proceed, pipe the channel IDs to archive
+slack-migrate channels fetch --zero-members | awk '{print $1}' | slack-migrate channels archive
+
+# Or use --dry-run first to preview what would be archived
+slack-migrate channels fetch --zero-members | awk '{print $1}' | slack-migrate channels archive --dry-run
+```
+
+### Download Custom Emoji
+To backup all custom emoji from your workspace:
+
+```bash
+# First, view all available emoji
+slack-migrate emoji fetch
+
+# Download all emoji files (will be saved to data/custom-emojis-files/)
+slack-migrate emoji download
+```
+
+### Review Channels by Creator
+To find all channels created by a specific user:
+
+```bash
+# Using email address
+slack-migrate channels fetch --creator "mark.nobody@dka.io"
+
+# Using Slack user ID
+slack-migrate channels fetch --creator "U01234ABC"
+```
+
+### Find Recently Archived Channels
+To list channels that were archived in the last 30 days:
+
+```bash
+slack-migrate channels fetch --type archived --archived-days-ago 30
+```
+
+### Add Prefix to Multiple Channels
+To add a prefix to a set of channels (e.g., marking old channels):
+
+```bash
+# Preview changes first
+slack-migrate channels fetch --type active | awk '{print $1}' | slack-migrate channels prefix archived --dry-run
+
+# Apply the changes
+slack-migrate channels fetch --type active | awk '{print $1}' | slack-migrate channels prefix archived
+```
+
+Note: The examples using `awk` assume the output format where the channel ID is the first column. Always review the output before piping to destructive commands, and consider using `--dry-run` when available.
 
 ## Contributing
 
