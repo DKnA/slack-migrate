@@ -1,0 +1,183 @@
+Found 115 channels with zero members:
+Displaying channels by creator
+Creator: Florian Plank (19 channels):
+  #3d-shopify-offer (created: 2017-05-10)
+  #alvar-simulator (created: 2016-09-05)
+  #alvardag-com (created: 2017-03-01)
+  #berlin-training (created: 2016-06-23)
+  #berlin-xmas-party (created: 2018-12-03)
+  #blockchain-location (created: 2016-10-07)
+  #bvg-smart-mirror (created: 2017-01-27)
+  #cases (created: 2017-03-13)
+  #conversation-design (created: 2019-03-15)
+  #eb-display-electronics-sw-oppo (created: 2021-09-16)
+  #ext-porsche-go-book (created: 2018-04-06)
+  #here-olp-ar-demo (created: 2018-04-04)
+  #inforarmor-demo (created: 2017-01-13)
+  #mcnally-eh-demo (created: 2016-09-30)
+  #op-berlin-taxi-pitch (created: 2017-02-02)
+  #op-health-challenge (created: 2017-03-31)
+  #opkk-arvr-pitch (created: 2017-01-31)
+  #wartsila-voyages (created: 2020-05-27)
+  #web-chat-test (created: 2017-01-17)
+
+Creator: Jarosław Mroczek (10 channels):
+  #dolby-ar-vr (created: 2019-02-19)
+  #hinman (created: 2019-09-17)
+  #li-design-challenge (created: 2019-04-25)
+  #marubeni (created: 2019-08-16)
+  #medical-insurance (created: 2019-02-22)
+  #nyborg-mawent-iot (created: 2019-10-23)
+  #ripcord-backend (created: 2019-09-24)
+  #ripcord-us-trip (created: 2019-11-27)
+  #sap (created: 2019-10-21)
+  #tdk-marketing (created: 2018-06-13)
+
+Creator: Artur Zielazny (9 channels):
+  #bitcoin (created: 2017-02-17)
+  #engineering-packages (created: 2020-11-18)
+  #finnair-daily (created: 2016-05-11)
+  #here-lui (created: 2019-03-12)
+  #kappa (created: 2016-12-28)
+  #loki (created: 2017-02-08)
+  #maana (created: 2017-11-20)
+  #topspot-tech-video (created: 2016-09-08)
+  #ux-wro-old (created: 2018-09-18)
+
+Creator: Perttu Monthan (8 channels):
+  #dka-kollekt-ext (created: 2022-12-29)
+  #dka-robu-medgroup-oppo-ext (created: 2021-11-11)
+  #fastems-oppo (created: 2020-04-01)
+  #hemdel_se-oppo (created: 2021-06-10)
+  #instru-optiikka-oppty (created: 2019-07-01)
+  #kesko-kt-oppo-ext (created: 2020-10-30)
+  #solu-digital (created: 2020-01-20)
+  #wirepas-oppo (created: 2020-12-18)
+
+Creator: Hanna Kangas (8 channels):
+  #case-study-templates (created: 2021-04-28)
+  #forenom-oppo (created: 2020-10-09)
+  #kemira-ideacampaign-mentoring (created: 2020-09-04)
+  #posti-oppos (created: 2020-12-09)
+  #radiomedia-oppo (created: 2023-04-04)
+  #suomalainen-driving-growth-oppo (created: 2020-09-18)
+  #teliawork-maintenance-gdpr (created: 2021-01-26)
+  #wärtsilä-3d-question (created: 2020-11-03)
+
+Creator: unknown (6 channels):
+  #sk-neat-heron (created: 2017-10-19)
+  #sk-sentimental-macker (created: 2017-12-25)
+  #sk-soulful-mollusk (created: 2017-11-22)
+  #sk-spotted-hound (created: 2018-04-02)
+  #sk-stupendous-coral (created: 2018-01-09)
+  #tinki-smooch (created: 2017-10-19)
+
+Creator: unknown (6 channels):
+  #bmw_baci_app (created: 2019-07-16)
+  #dw_mini_living (created: 2019-04-11)
+  #porsche-china (created: 2019-03-21)
+  #rnm (created: 2019-03-07)
+  #t-labs (created: 2019-10-21)
+  #toa (created: 2019-03-06)
+
+Creator: unknown (5 channels):
+  #alvardag_marketing (created: 2016-11-10)
+  #dka_pitch_dick (created: 2016-10-05)
+  #ext_alvard_marketing (created: 2017-01-18)
+  #koff_offer (created: 2016-09-27)
+  #loki_proposal (created: 2016-12-14)
+
+Creator: unknown (4 channels):
+  #sk-anni-rikkonen (created: 2017-01-04)
+  #tinki-newsfeed (created: 2016-03-14)
+  #tinki-support (created: 2016-09-07)
+  #tinki-tech (created: 2016-02-28)
+
+Creator: unknown (4 channels):
+  #grupa-azoty (created: 2018-09-17)
+  #myonetec-ext (created: 2020-01-10)
+  #porsche-go-dev (created: 2018-06-11)
+  #storaenso-dev (created: 2018-06-08)
+
+Creator: Bartłomiej Rak (3 channels):
+  #crowst-design-support (created: 2017-10-18)
+  #kacper-in-a-bus (created: 2019-04-01)
+  #kółko_bijatykowe (created: 2019-02-27)
+
+Creator: unknown (3 channels):
+  #nordlab (created: 2023-06-27)
+  #op-accessibility-training-oppo (created: 2023-01-12)
+  #privacy-designer (created: 2023-04-17)
+
+Creator: Kuba Andrzejewski (2 channels):
+  #loki-invision (created: 2017-02-16)
+  #piwo-z-benem-feb21-22 (created: 2020-02-04)
+
+Creator: Michał Skrabacz (2 channels):
+  #_standup (created: 2017-05-05)
+  #lt-service-ext (created: 2019-02-14)
+
+Creator: unknown (2 channels):
+  #brickz-wro (created: 2018-11-06)
+  #wycieczka_klasowa (created: 2017-08-23)
+
+Creator: unknown (2 channels):
+  #blueswan-edx (created: 2018-09-03)
+  #wro-parking (created: 2018-04-24)
+
+Creator: Kasia Krukar (2 channels):
+  #dux (created: 2020-01-30)
+  #góry (created: 2018-10-18)
+
+Creator: Ola Wojtasik (2 channels):
+  #uop (created: 2019-12-19)
+  #wigilia2018 (created: 2018-10-26)
+
+Creator: unknown (2 channels):
+  #meetup-jug-toast (created: 2018-12-05)
+  #studenci-asp (created: 2019-10-01)
+
+Creator: unknown (2 channels):
+  #boltworksoppo (created: 2021-08-25)
+  #seduo-plan-ext (created: 2021-12-14)
+
+Creator: unknown (2 channels):
+  #nokian_tyres-oppo (created: 2023-03-30)
+  #veikkaus-julkkaritarjous (created: 2022-12-27)
+
+Creator: unknown (1 channels):
+  #alvardag (created: 2016-03-30)
+
+Creator: Toni Suni (1 channels):
+  #tinki-design (created: 2016-06-01)
+
+Creator: unknown (1 channels):
+  #rtr_stockmann (created: 2017-01-31)
+
+Creator: Karol (1 channels):
+  #here_olp (created: 2018-03-08)
+
+Creator: unknown (1 channels):
+  #porsche-go-pilot (created: 2018-11-19)
+
+Creator: Mateusz Koncikowski (1 channels):
+  #hoop-newsfeed (created: 2018-12-06)
+
+Creator: Katja Karhia (1 channels):
+  #kesko-logistiikka (created: 2020-01-07)
+
+Creator: Dobrek Kropielnicki (1 channels):
+  #bimla-3d (created: 2020-02-12)
+
+Creator: unknown (1 channels):
+  #l-oppo (created: 2020-08-24)
+
+Creator: Miro Vilkki (1 channels):
+  #synlab-tech (created: 2021-02-02)
+
+Creator: Tommi Leskinen (1 channels):
+  #raute-showroom (created: 2021-03-08)
+
+Creator: unknown (1 channels):
+  #alma-business-premises-and-marketplace-growth-strategy (created: 2021-11-05)
+
