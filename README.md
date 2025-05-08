@@ -119,58 +119,8 @@ To find and archive all channels that have zero members:
 slack-migrate channels fetch --zero-members
 
 # Review the output and if you want to proceed, pipe the channel IDs to archive
-slack-migrate channels fetch --zero-members | awk '{print $1}' | slack-migrate channels archive
+slack-migrate channels fetch --zero-members | tail -n +2 | awk '{print $1}' | slack-migrate channels archive
 
 # Or use --dry-run first to preview what would be archived
-slack-migrate channels fetch --zero-members | awk '{print $1}' | slack-migrate channels archive --dry-run
+slack-migrate channels fetch --zero-members | tail -n +2 | awk '{print $1}' | slack-migrate channels archive --dry-run
 ```
-
-### Download Custom Emoji
-To backup all custom emoji from your workspace:
-
-```bash
-# First, view all available emoji
-slack-migrate emoji fetch
-
-# Download all emoji files (will be saved to data/custom-emojis-files/)
-slack-migrate emoji download
-```
-
-### Review Channels by Creator
-To find all channels created by a specific user:
-
-```bash
-# Using email address
-slack-migrate channels fetch --creator "mark.nobody@dka.io"
-
-# Using Slack user ID
-slack-migrate channels fetch --creator "U01234ABC"
-```
-
-### Find Recently Archived Channels
-To list channels that were archived in the last 30 days:
-
-```bash
-slack-migrate channels fetch --type archived --archived-days-ago 30
-```
-
-### Add Prefix to Multiple Channels
-To add a prefix to a set of channels (e.g., marking old channels):
-
-```bash
-# Preview changes first
-slack-migrate channels fetch --type active | awk '{print $1}' | slack-migrate channels prefix archived --dry-run
-
-# Apply the changes
-slack-migrate channels fetch --type active | awk '{print $1}' | slack-migrate channels prefix archived
-```
-
-Note: The examples using `awk` assume the output format where the channel ID is the first column. Always review the output before piping to destructive commands, and consider using `--dry-run` when available.
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
