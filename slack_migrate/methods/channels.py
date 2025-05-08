@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from tabulate import tabulate
 import sys
 from slack_bolt import App
+import csv as csv_lib
 
 
 def filter_channels_by_type(channels, filter_type):
@@ -113,7 +114,8 @@ def channels_group():
 @click.option('--archived-days-ago', type=click.INT, help='Maximum number of days to look back for when channel was archived')
 @click.option('--created-days-ago', type=click.INT, help='Maximum number of days to look back for when channel was created')
 @click.option('--zero-members', is_flag=True, help='Only return channels with zero members')
-def fetch_channels_cmd(type, refresh, creator, archived_days_ago, created_days_ago, zero_members):
+@click.option('--csv', is_flag=True, help='Export channels to CSV file')
+def fetch_channels_cmd(type, refresh, creator, archived_days_ago, created_days_ago, zero_members, csv):
     """Fetch channels from Slack workspace."""
     channels_dict = fetch_channels(refresh=refresh)
     filtered_channels_dict = filter_channels_by_type(channels_dict, type)
@@ -136,41 +138,83 @@ def fetch_channels_cmd(type, refresh, creator, archived_days_ago, created_days_a
 
     click.echo(f"total {len(filtered_channels_dict)}")
 
-    rows = []
-    for channel in filtered_channels_dict:
-        created_ts = channel.get('created', 0)
-        updated_ts = channel.get('updated', 0)
+    if csv:
+        # Define CSV fields based on the channel data
+        fields = [
+            'id', 'name', 'num_members', 'created', 'updated', 'is_archived',
+            'creator_id', 'creator_email', 'topic', 'purpose'
+        ]
+        
+        # Create CSV file
+        with open('data/channels.csv', 'w', newline='') as csvfile:
+            writer = csv_lib.DictWriter(csvfile, fieldnames=fields)
+            writer.writeheader()
+            
+            for channel in filtered_channels_dict:
+                created_ts = channel.get('created', 0)
+                updated_ts = channel.get('updated', 0)
+                
+                # Format timestamps
+                created_date = datetime.fromtimestamp(int(created_ts)).strftime('%Y-%m-%d %H:%M:%S') if created_ts else ''
+                updated_date = datetime.fromtimestamp(int(updated_ts) / 1000).strftime('%Y-%m-%d %H:%M:%S') if updated_ts else ''
+                
+                creator_info = channel.get('creator', {})
+                creator_email = creator_info.get('email', '') if isinstance(creator_info, dict) else ''
+                creator_id = creator_info.get('id', '') if isinstance(creator_info, dict) else ''
+                
+                row = {
+                    'id': channel.get('id', ''),
+                    'name': channel.get('name', ''),
+                    'num_members': channel.get('num_members', 0),
+                    'created': created_date,
+                    'updated': updated_date,
+                    'is_archived': 'true' if channel.get('is_archived', False) else 'false',
+                    'creator_id': creator_id,
+                    'creator_email': creator_email,
+                    'topic': channel.get('topic', {}).get('value', ''),
+                    'purpose': channel.get('purpose', {}).get('value', '')
+                }
+                
+                writer.writerow(row)
+        
+        click.echo("Channels exported to channels.csv")
+    else:
+        # Original table output
+        rows = []
+        for channel in filtered_channels_dict:
+            created_ts = channel.get('created', 0)
+            updated_ts = channel.get('updated', 0)
 
-        # Format created (in seconds)
-        if created_ts:
-            created_date = datetime.fromtimestamp(
-                int(created_ts)).strftime('%Y-%m-%d %H:%M:%S')
-        else:
-            created_date = '<created unknown>'
+            # Format created (in seconds)
+            if created_ts:
+                created_date = datetime.fromtimestamp(
+                    int(created_ts)).strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                created_date = '<created unknown>'
 
-        # Format updated (in milliseconds)
-        if updated_ts:
-            # Convert milliseconds to seconds for datetime
-            updated_date = datetime.fromtimestamp(
-                int(updated_ts) / 1000).strftime('%Y-%m-%d %H:%M:%S')
-        else:
-            updated_date = '<updated unknown>'
+            # Format updated (in milliseconds)
+            if updated_ts:
+                # Convert milliseconds to seconds for datetime
+                updated_date = datetime.fromtimestamp(
+                    int(updated_ts) / 1000).strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                updated_date = '<updated unknown>'
 
-        creator_info = channel.get('creator', {})
-        creator_email = creator_info.get(
-            'email', '') if isinstance(creator_info, dict) else ''
+            creator_info = channel.get('creator', {})
+            creator_email = creator_info.get(
+                'email', '') if isinstance(creator_info, dict) else ''
 
-        rows.append([
-            channel.get('id', ''),
-            f"#{channel.get('name', '')}",
-            channel.get('num_members', 0),
-            created_date,
-            updated_date,
-            creator_email,
-            "archived" if channel.get('is_archived', False) else "active",
-        ])
+            rows.append([
+                channel.get('id', ''),
+                f"#{channel.get('name', '')}",
+                channel.get('num_members', 0),
+                created_date,
+                updated_date,
+                creator_email,
+                "archived" if channel.get('is_archived', False) else "active",
+            ])
 
-    click.echo(tabulate(rows, tablefmt="plain"))
+        click.echo(tabulate(rows, tablefmt="plain"))
 
 
 @channels_group.command('archive')

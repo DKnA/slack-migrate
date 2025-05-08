@@ -5,6 +5,7 @@ import urllib.error
 from collections import defaultdict
 from urllib.parse import urlparse
 from ..api import fetch_emoji
+import csv as csv_lib
 
 
 def download_emoji_files(emoji_dict):
@@ -71,12 +72,32 @@ def emoji_group():
 
 @emoji_group.command('fetch')
 @click.option('--refresh', is_flag=True, help='Force refresh of cached emoji data')
-def fetch_emoji_cmd(refresh):
+@click.option('--csv', is_flag=True, help='Export emoji to CSV file')
+def fetch_emoji_cmd(refresh, csv):
     """Fetch custom emoji from Slack workspace."""
 
     emoji_dict = fetch_emoji(refresh=refresh)
-    for emoji_name, emoji_url in emoji_dict.items():
-        click.echo(f":{emoji_name}:")
+    
+    if csv:
+        # Define CSV fields
+        fields = ['name', 'url']
+        
+        # Create CSV file
+        with open('data/emoji.csv', 'w', newline='') as csvfile:
+            writer = csv_lib.DictWriter(csvfile, fieldnames=fields)
+            writer.writeheader()
+            
+            for emoji_name, emoji_url in emoji_dict.items():
+                row = {
+                    'name': emoji_name,
+                    'url': emoji_url
+                }
+                writer.writerow(row)
+        
+        click.echo("Emoji exported to emoji.csv")
+    else:
+        for emoji_name, emoji_url in emoji_dict.items():
+            click.echo(f":{emoji_name}:")
 
 
 @emoji_group.command('download')

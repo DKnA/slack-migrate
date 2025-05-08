@@ -3,7 +3,9 @@ import json
 import time
 from pathlib import Path
 from slack_bolt import App
+from slack_sdk import WebClient
 from dotenv import load_dotenv
+from slack_sdk.http_retry.builtin_handlers import RateLimitErrorRetryHandler
 
 # Load environment variables
 load_dotenv()
@@ -14,8 +16,14 @@ app = App(
     signing_secret=os.environ.get("SLACK_SIGNING_SECRET")
 )
 
-from slack_sdk import WebClient
+# Add rate limit handler to app client
+rate_limit_handler = RateLimitErrorRetryHandler(max_retry_count=1)
+app.client.retry_handlers.append(rate_limit_handler)
+
 admin_client = WebClient(token=os.environ.get("SLACK_USER_TOKEN"))
+
+# Add rate limit handler to admin client
+admin_client.retry_handlers.append(rate_limit_handler)
 
 # Cache directory
 CACHE_DIR = Path("cache")

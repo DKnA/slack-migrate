@@ -55,7 +55,7 @@ pip install -e .
 slack_migrate/
 ├── api.py           # Core API functionality
 ├── cli.py           # CLI interface
-├── methods/         # Command implementations
+└── methods/         # Command implementations
     ├── channels.py
     ├── emoji.py
     └── users.py
@@ -69,7 +69,7 @@ The tool provides several command groups for different Slack data types:
 ### Channels Commands
 
 ```bash
-slack-migrate channels fetch [--type TYPE] [--refresh] [--creator CREATOR] [--archived-days-ago DAYS] [--created-days-ago DAYS] [--zero-members]
+slack-migrate channels fetch [--type TYPE] [--refresh] [--creator CREATOR] [--archived-days-ago DAYS] [--created-days-ago DAYS] [--zero-members] [--csv]
 slack-migrate channels archive CHANNEL_ID [--dry-run]
 slack-migrate channels prefix PREFIX [CHANNEL_ID] [--dry-run]
 ```
@@ -77,20 +77,21 @@ slack-migrate channels prefix PREFIX [CHANNEL_ID] [--dry-run]
 ### Emoji Commands
 
 ```bash
-slack-migrate emoji fetch [--refresh]
+slack-migrate emoji fetch [--refresh] [--csv]
 slack-migrate emoji download [--refresh]
 ```
 
 ### Users Commands
 
 ```bash
-slack-migrate users fetch [--refresh]
+slack-migrate users fetch [--refresh] [--csv]
 ```
 
 ### Common Options
 
 - `--refresh`: Force refresh the cache and fetch new data from Slack
 - `--dry-run`: Preview actions without executing them (for archive and prefix commands)
+- `--csv`: Export data to CSV file (for fetch commands)
 
 ### Channel Type Options
 - `--type`: Filter channels by type (choices: all, active, archived; default: all)
