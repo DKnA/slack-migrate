@@ -16,6 +16,27 @@ A Python-based CLI tool for extracting and managing Slack workspace data, includ
 - Slack workspace with appropriate permissions
 - Slack API tokens (Bot Token and User Token)
 
+## Required Slack Permissions
+
+The following permissions are required for the CLI to function properly. These can be configured in your Slack workspace's app settings:
+
+### Write Permissions
+- `channels:write` - Manage public channels and create new ones
+- `im:write` - Start direct and group direct messages
+- `mpim:write` - Start direct and group direct messages
+- `channels:join` - Join public channels
+- `channels:manage` - Manage public channels and create new ones
+- `groups:write` - Manage private channels
+
+### Read Permissions
+- `channels:read` - View basic information about public channels
+- `groups:read` - View basic information about private channels
+- `emoji:read` - View custom emoji
+- `users:read` - View people in the workspace
+- `users:read.email` - View email addresses of people
+
+Note: The actual permissions installed might vary for each workspace. Make sure to configure these permissions in your Slack workspace's app settings.
+
 ## Installation
 
 1. Clone the repository:
